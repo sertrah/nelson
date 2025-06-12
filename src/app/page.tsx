@@ -1,7 +1,24 @@
-import Image from "next/image";
+import AboutSection from "./components/AboutSection";
+import HeroSection from "./components/HeroSection";
+import ProjectsSection from "./components/ProjectsSection";
+import ServicesSection from "./components/ServicesSection";
+import TestimonialsCarousel from "./components/TestimonialsCarousel";
+import WorkProcessSection from "./components/WorkProcess";
+import WorkProcessImage from "./components/WorkProcessImage";
 
 export default function Home() {
   return (
+    <main>
+      <HeroSection />
+      <ServicesSection />
+      <AboutSection />
+      <ProjectsSection />
+      <WorkProcessSection />
+      <WorkProcessImage />
+      <TestimonialsCarousel />
+    </main>
+  );
+  /*   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
@@ -99,5 +116,5 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  );
+  ); */
 }
