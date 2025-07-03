@@ -1,12 +1,14 @@
 // components/TestimonialsCarousel.tsx
 "use client";
 
-import "keen-slider/keen-slider.min.css";
-import { useKeenSlider } from "keen-slider/react";
+// import "keen-slider/keen-slider.min.css";
+/* import { useKeenSlider } from "keen-slider/react";
 import { useEffect } from "react";
-import Image from "next/image";
+import Image from "next/image"; */
+import { Marquee } from "@/components/magicui/marquee";
+import { cn } from "../helpers/ui-layouts-utils";
 
-const testimonials = [
+/* const testimonials = [
   {
     name: "Cecillia C.",
     quote: "Me encantó, estupendo!",
@@ -27,89 +29,110 @@ const testimonials = [
     comment: "Los materiales y acabados son impresionantes. Volveré a comprar.",
     img: "/placeholder.png",
   },
+]; */
+
+const reviews = [
+  {
+    name: "Cecillia C.",
+    username: "@jack",
+    body: "Me encantó, estupendo!",
+    img: "https://avatar.vercel.sh/jack",
+  },
+  {
+    name: "Carlos A.",
+    username: "@jill",
+    body: "Gran calidad!",
+    img: "https://avatar.vercel.sh/jill",
+  },
+  {
+    name: "Laura M.",
+    username: "@john",
+    body: "Los materiales y acabados son impresionantes. Volveré a comprar.",
+    img: "https://avatar.vercel.sh/john",
+  },
+  {
+    name: "Jane",
+    username: "@jane",
+    body: "Excelente servicio y atención al cliente. Muy recomendable.",
+    img: "https://avatar.vercel.sh/jane",
+  },
+  {
+    name: "Jenny",
+    username: "@jenny",
+    body: "Todo perfecto, excelente atención y servicio.",
+    img: "https://avatar.vercel.sh/jenny",
+  },
+  {
+    name: "James",
+    username: "@james",
+    body: "Muy satisfecho con el resultado final. Superó mis expectativas.",
+    img: "https://avatar.vercel.sh/james",
+  },
 ];
 
-export default function TestimonialsCarousel() {
-  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    mode: "snap",
-    slides: {
-      origin: "center",
-      perView: 1.2,
-      spacing: 16,
-    },
-  });
+const firstRow = reviews.slice(0, reviews.length / 2);
+const secondRow = reviews.slice(reviews.length / 2);
 
-  /*   const [sliderRef2, instanceRef2] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    mode: "snap",
-    slides: {
-      origin: "center",
-      perView: 1.2,
-      spacing: 16,
-    },
-  }); */
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      instanceRef.current?.next();
-    }, 3000);
-
-    /*     const interval2 = setInterval(() => {
-      instanceRef2.current?.next();
-    }, 4000); */
-
-    return () => {
-      clearInterval(interval);
-      /*       clearInterval(interval2); */
-    };
-  }, [instanceRef]);
-
+const ReviewCard = ({
+  img,
+  name,
+  username,
+  body,
+}: {
+  img: string;
+  name: string;
+  username: string;
+  body: string;
+}) => {
   return (
-    <section className="bg-[#744C28] py-16">
-      <h2 className="text-center text-white text-lg mb-2">
-        Mira algunos testimonios reales
-      </h2>
-      <h3 className="text-center text-white text-3xl font-bold mb-8">
-        Testimonios
-      </h3>
-
-      <div className="max-w-6xl mx-auto flex flex-col gap-8">
-        <div ref={sliderRef} className="keen-slider max-w-6xl mx-auto">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="keen-slider__slide bg-white rounded-xl flex flex-row md:flex-row  items-center shadow-md"
-            >
-              <div className="w-[50%] h-full relative overflow-hidden border">
-                <Image src={t.img} alt={t.name} fill className="object-cover" />
-              </div>
-              <div className="text-left md:text-left p-4">
-                <h4 className="font-bold text-lg">{t.quote}</h4>
-                <p className="text-sm text-gray-600 my-2">“{t.comment}”</p>
-                <p className="font-bold text-black text-right">- {t.name}</p>
-              </div>
-            </div>
-          ))}
+    <figure
+      className={cn(
+        "relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
+        // light styles
+        "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
+        // dark styles
+        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
+      )}
+    >
+      <div className="flex flex-row items-center gap-2">
+        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <div className="flex flex-col">
+          <figcaption className="text-sm font-medium dark:text-white">
+            {name}
+          </figcaption>
+          <p className="text-xs font-medium dark:text-white/40">{username}</p>
         </div>
-        {/*         <div ref={sliderRef2} className="keen-slider max-w-6xl mx-auto">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="keen-slider__slide bg-white rounded-xl flex flex-row md:flex-row  items-center shadow-md"
-            >
-              <div className="w-[50%] h-full relative overflow-hidden border">
-                <Image src={t.img} alt={t.name} fill className="object-cover" />
-              </div>
-              <div className="text-left md:text-left p-4">
-                <h4 className="font-bold text-lg">{t.quote}</h4>
-                <p className="text-sm text-gray-600 my-2">“{t.comment}”</p>
-                <p className="font-bold text-black text-right">- {t.name}</p>
-              </div>
-            </div>
-          ))}
-        </div> */}
       </div>
-    </section>
+      <blockquote className="mt-2 text-sm">{body}</blockquote>
+    </figure>
+  );
+};
+
+export default function TestimonialsCarousel() {
+  return (
+    <div className="relative flex w-full lg:max-w-[1280px] m-auto mt-16 flex-col items-center justify-center overflow-hidden">
+      <div className="w-10/12 mx-auto">
+        <h2 className="text-center text-black text-4xl mb-10"></h2>
+        <p className="text-center text-sm uppercase tracking-widest text-gray-500 mb-4">
+          Testimonios
+        </p>
+        <h2 className="2xl:text-5xl text-4xl px-8 font-semibold text-center tracking-tight leading-[120%] mb-20">
+          Mira lo que dicen nuestros clientes
+        </h2>
+      </div>
+
+      <Marquee pauseOnHover className="[--duration:20s]">
+        {firstRow.map((review) => (
+          <ReviewCard key={review.username} {...review} />
+        ))}
+      </Marquee>
+      <Marquee reverse pauseOnHover className="[--duration:20s]">
+        {secondRow.map((review) => (
+          <ReviewCard key={review.username} {...review} />
+        ))}
+      </Marquee>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
+    </div>
   );
 }
