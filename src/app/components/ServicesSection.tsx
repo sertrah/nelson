@@ -47,6 +47,7 @@ export default function ServicesSection() {
         {services.map((service, index) => (
           <ScrollElement
             key={`services-${index}`}
+            delay={index * 0.2}
             viewport={{ once: true, amount: 0.5, margin: "0px 0px 0px 0px" }}
           >
             <div className="flex flex-col items-center">

@@ -6,8 +6,13 @@ type Direction = "up" | "down" | "left" | "right";
 
 const generateVariants = (
   direction: Direction
-): { hidden: Variant; visible: Variant } => {
-  const axis = direction === "left" || direction === "right" ? "x" : "y";
+): {
+  hidden: Variant;
+  visible: Variant;
+  transition: { duration: number; ease: string };
+} => {
+  const axis: string =
+    direction === "left" || direction === "right" ? "x" : "y";
   const value = direction === "right" || direction === "down" ? 100 : -100;
 
   return {
@@ -16,10 +21,10 @@ const generateVariants = (
       filter: "blur(0px)",
       opacity: 1,
       [axis]: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
+    },
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
     },
   };
 };
@@ -33,6 +38,7 @@ interface ScrollElementProps extends Omit<MotionComponentProps, "children"> {
   variants?: {
     hidden?: any;
     visible?: any;
+    transition?: { duration: number; ease: string };
   };
   viewport?: {
     amount?: number;
@@ -58,7 +64,7 @@ function ScrollElement({
     visible: {
       ...baseVariants.visible,
       transition: {
-        ...baseVariants.visible.transition,
+        ...baseVariants.transition,
         delay, // Apply custom delay here
       },
     },

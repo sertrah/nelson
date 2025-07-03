@@ -113,7 +113,6 @@ export function AccordionItem({
 export function AccordionHeader({
   children,
   customIcon,
-  className,
 }: {
   children: ReactNode;
   customIcon?: boolean;
